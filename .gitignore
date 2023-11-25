@@ -1,1 +1,27 @@
+import tkinter as tk
+from tkinter import *
+import random
 
+class level_01:
+    def __init__(GUI1):
+        # Window Maker
+        GUI1.window = Tk()
+        GUI1.window.title("Speed Typing Game -- level 01 --")
+        GUI1.window.iconbitmap("Icon.ico")
+        GUI1.window.geometry("900x600+250+50")
+        GUI1.window.config(bg="RoyalBlue3")
+        GUI1.window.resizable(0, 0)
+        # Logo Image
+        logo_Image = PhotoImage(file = "Logo.png")
+        logo_label = Label(GUI1.window, image = logo_Image, bg = "RoyalBlue3")
+        logo_label. place(x = 310, y = 80)
+        # Title Part
+        Title = Label(GUI1.window, text = "--- Welcome To level 01 ---", bg = "RoyalBlue3", font = ("Comic Sans MS", 25, "bold"), width = 35, fg = "white")
+        Title.place(x=80, y=50)
+        # Words Tob Be Written
+        GUI1.words = open("Words.txt", "r").read().split("\n")
+        GUI1.words_written = tk.Label(GUI1.window, text = random.choice(GUI1.words), font = ("black copper", 30, "bold"), bg = "RoyalBlue3", fg = "white")
+        GUI1.words_written.grid(row = 0, column = 0, padx = 380, pady = 320)
+        
+        GUI1.window.mainloop()
+level_01()
