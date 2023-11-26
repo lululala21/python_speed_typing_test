@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 import random
+i = 0
 
 class level_01:
     def __init__(GUI1):
@@ -14,14 +15,72 @@ class level_01:
         # Logo Image
         logo_Image = PhotoImage(file = "Logo.png")
         logo_label = Label(GUI1.window, image = logo_Image, bg = "RoyalBlue3")
-        logo_label. place(x = 310, y = 80)
+        logo_label.place(x = 310, y = 80)
         # Title Part
         Title = Label(GUI1.window, text = "--- Welcome To level 01 ---", bg = "RoyalBlue3", font = ("Comic Sans MS", 25, "bold"), width = 35, fg = "white")
         Title.place(x=80, y=50)
-        # Words Tob Be Written
+        # Words To Be Written
         GUI1.words = open("Words.txt", "r").read().split("\n")
-        GUI1.words_written = tk.Label(GUI1.window, text = random.choice(GUI1.words), font = ("black copper", 30, "bold"), bg = "RoyalBlue3", fg = "white")
-        GUI1.words_written.grid(row = 0, column = 0, padx = 380, pady = 320)
+        GUI1.words_written = tk.Label(GUI1.window, text = random.choice(GUI1.words), font = ("black copper", 35, "bold"), bg = "RoyalBlue3", fg = "white")
+        GUI1.words_written.place(x = 440, y = 400, anchor = CENTER)
+        # Words Label
+        word_label = Label(GUI1.window, text = "Words", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
+        word_label.place(x = 45, y = 150)
+        # Words Counter
+        word_counter = Label(GUI1.window, text = "0", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
+        word_counter.place(x = 90, y = 220)
+        # Time Label
+        timer_label = Label(GUI1.window, text = "Timer", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
+        timer_label.place(x = 740, y = 150)
+        # Timer Counter
+        timer_counter = Label(GUI1.window, text = "60", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
+        timer_counter.place(x = 770, y = 220)
+        # Word Entry Space
+        text_entry = Entry(GUI1.window, font = ("arial", 25, "bold"), bd = 8, justify = CENTER)
+        text_entry.place(x = 258, y = 450)
+        text_entry.focus_set()
+        # Instruction Text
+        instruction = Label(GUI1.window, text = "Type in the word and press ENTER", font = ("Chiller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
+        instruction.place(x = 445, y = 320, anchor = CENTER)
+        # Crying Emoji
+        crying_emoji = PhotoImage(file = "crying emoji.png")
+        pro_emoji = PhotoImage(file = "cool.png")
+        smile_emoji = PhotoImage(file = "smile.png")
+
+        crying_label = Label(GUI1.window, bg = "RoyalBlue3")
+        crying_label.place(x = 90, y = 450)
         
+        crying_label_1 = Label(GUI1.window, bg = "RoyalBlue3")
+        crying_label_1.place(x = 740, y = 450)
+        
+        """
+        # Pro Emoji
+        pro_emoji = PhotoImage(file = "cool.png")
+        pro_label = Label(GUI1.window, image = pro_emoji, bg = "RoyalBlue3")
+        pro_label.place(x = 90, y = 450)
+        
+        pro_label_1 = Label(GUI1.window, image = pro_emoji, bg = "RoyalBlue3")
+        pro_label_1.place(x = 740, y = 450)
+        # smile Emoji
+        smile_emoji = PhotoImage(file = "smile.png")
+        smile_label = Label(GUI1.window, image = smile_emoji, bg = "RoyalBlue3")
+        smile_label.place(x = 90, y = 450)
+        
+        smile_label_1 = Label(GUI1.window, image = smile_emoji, bg = "RoyalBlue3")
+        smile_label_1.place(x = 740, y = 450)
+        """
+        
+    def x(event):
+        global i
+        i += 1
+        GUI1,window.word_counter.config(text = i)
+        random.shuffle(open("Words.txt", "r"))
+        words_label.config(text = open("Words.txt", "r")[0])
+        wordEntry.delete(0, END)    
+        
+        
+        
+        GUI1.window.bind("<Return>", x)
         GUI1.window.mainloop()
+
 level_01()
