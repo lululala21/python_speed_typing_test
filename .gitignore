@@ -2,6 +2,26 @@ import tkinter as tk
 from tkinter import *
 import random
 i = 0
+time_left = 60
+correct_words = 0
+wrong_words = 0
+
+class time_is_up:
+    def __init__(GUI2):
+        GUI2.window2 = Tk()
+        GUI2.window2.title("Speed Typing Game -- level 01 --")
+        GUI2.window2.iconbitmap("Icon.ico")
+        GUI2.window2.geometry("900x600+250+50")
+        GUI2.window2.config(bg="RoyalBlue3")
+        GUI2.window2.resizable(0, 0)
+        
+        Title = Label(GUI2.window2, text = "TIME IS UP", bg = "RoyalBlue3", font = ("Comic Sans MS", 50, "bold"), fg = "white")
+        Title.place(x=250, y=350)
+        
+        alarm_Image = PhotoImage(file = "alarm.png")
+        alarm_label = Label(GUI2.window2, image = alarm_Image, bg = "RoyalBlue3")
+        alarm_label.place(x = 330, y = 80)
+
 
 class level_01:
     def __init__(GUI1):
@@ -27,13 +47,13 @@ class level_01:
         word_label = Label(GUI1.window, text = "Words", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
         word_label.place(x = 45, y = 150)
         # Words Counter
-        word_counter = Label(GUI1.window, text = "0", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
+        word_counter = Label(GUI1.window, text = i, font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
         word_counter.place(x = 90, y = 220)
         # Time Label
         timer_label = Label(GUI1.window, text = "Timer", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
         timer_label.place(x = 740, y = 150)
         # Timer Counter
-        timer_counter = Label(GUI1.window, text = "60", font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
+        timer_counter = Label(GUI1.window, text = time_left, font = ("Casteller", 28, "bold"), bg = "RoyalBlue3", fg = "white")
         timer_counter.place(x = 770, y = 220)
         # Word Entry Space
         text_entry = Entry(GUI1.window, font = ("arial", 25, "bold"), bd = 8, justify = CENTER)
@@ -69,17 +89,35 @@ class level_01:
         smile_label_1 = Label(GUI1.window, image = smile_emoji, bg = "RoyalBlue3")
         smile_label_1.place(x = 740, y = 450)
         """
-        
-    def x(event):
-        global i
-        i += 1
-        GUI1,window.word_counter.config(text = i)
-        random.shuffle(open("Words.txt", "r"))
-        words_label.config(text = open("Words.txt", "r")[0])
-        wordEntry.delete(0, END)    
-        
-        
-        
+        def timer():
+            global time_left
+            if time_left > 0:
+                time_left -= 1
+                timer_counter.config(text = time_left)
+                timer_counter.after(1000, timer)
+            else:
+                time_is_up()
+                result = correct_words - wrong_words
+                instruction.config(text = f"Correct words: {correct_words}\n Wrong words: {wrong_words}\n Final Score {result}")
+            
+        def x(event):
+            global i, correct_words, wrong_words
+            i += 1
+            word_counter.config(text = i)
+            instruction.config(text = "")
+            
+            if time_left == 60:
+                timer()
+            
+            if text_entry.get() == GUI1.words["text"]:
+                correct_words += 1
+            else:
+                wrong_words += 1
+            
+            random.shuffle(GUI1.words)
+            GUI1.words_written.config(text = GUI1.words[0])
+            text_entry.delete(0, END)
+            
         GUI1.window.bind("<Return>", x)
         GUI1.window.mainloop()
 
