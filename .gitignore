@@ -1,7 +1,7 @@
 from tkinter import *
 import random
 i = 0
-time_left = 10
+time_left = 60
 correct_word = 0
 wrong_word = 0
 
@@ -60,20 +60,28 @@ class level_01:
         # Crying Emoji
         crying_emoji = PhotoImage(file = "crying emoji.png")
         crying_label_1 = Label(GUI1.window, bg = "RoyalBlue3")
+        crying_label_1.place(x = 90, y = 450)
         crying_label_2 = Label(GUI1.window, bg = "RoyalBlue3")
+        crying_label_2.place(x = 740, y = 450)
 
         # Pro Emoji
         pro_emoji = PhotoImage(file = "cool.png")
-        pro_label_1 = Label(GUI1.window, image = pro_emoji, bg = "RoyalBlue3")
-        pro_label_2 = Label(GUI1.window, image = pro_emoji, bg = "RoyalBlue3")
+        pro_label_1 = Label(GUI1.window, bg = "RoyalBlue3")
+        pro_label_1.place(x = 90, y = 450)
+        pro_label_2 = Label(GUI1.window, bg = "RoyalBlue3")
+        pro_label_2.place(x = 740, y = 450)
 
         # smile Emoji
         smile_emoji = PhotoImage(file = "smile.png")
-        smile_label_1 = Label(GUI1.window, image = smile_emoji, bg = "RoyalBlue3")
-        smile_label_2 = Label(GUI1.window, image = smile_emoji, bg = "RoyalBlue3")
+        smile_label_1 = Label(GUI1.window, bg = "RoyalBlue3")
+        smile_label_1.place(x = 90, y = 450)
+        smile_label_2 = Label(GUI1.window, bg = "RoyalBlue3")
+        smile_label_2.place(x = 740, y = 450)
 
         def timer():
             global time_left
+            if time_left < 7:
+                timer_counter.config(fg='red')
             if time_left > 0:
                 time_left -= 1
                 timer_counter.config(text = time_left)
@@ -96,27 +104,26 @@ class level_01:
                 result = correct_word - wrong_word
                 instruction.config(text = f"Correct Words: {correct_word}\n Wrong Words: {wrong_word}\n Final Score: {result}")
                 instruction.place(x = 445, y = 480, anchor = CENTER)
-                """
+                
                 if result < 9:
-                    crying_label_1.place(x = 90, y = 450)
-                    crying_label_2.place(x = 740, y = 450)
+                    crying_label_1.config(image = crying_emoji)
+                    crying_label_2.config(image = crying_emoji)
                 elif result > 19:
-                    pro_label_1.place(x = 90, y = 450)
-                    pro_label_2.place(x = 740, y = 450)
+                    pro_label_1.config(image = pro_emoji)
+                    pro_label_2.config(image = pro_emoji)
                 else:
-                    smile_label_1.place(x = 90, y = 450)
-                    smile_label_2.place(x = 740, y = 450)
-                """
+                    smile_label_1.config(image = smile_emoji)
+                    smile_label_2.config(image = smile_emoji)
 
+        def time_start(time_starts_after_pressing_any_key):
+            if time_left == 60:
+                timer()
 
         def x(event):
             global i ,correct_word, wrong_word
             i += 1
             word_counter.config(text = i)
             instruction.config(text = "")
-            
-            if time_left == 10:
-                timer()
             
             if (text_box.get() == GUI1.words_written["text"]):
                 correct_word += 1
@@ -127,6 +134,7 @@ class level_01:
             GUI1.words_written.config(text = GUI1.words[0])
             text_box.delete(0, END)
 
+        GUI1.window.bind('<KeyPress>', time_start)
         GUI1.window.bind("<Return>", x)
         GUI1.window.mainloop()
 
